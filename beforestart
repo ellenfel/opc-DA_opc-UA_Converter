@@ -1,2 +1,0 @@
-hostname -I
-./myServer 192.168.70.71 12345
