@@ -1,0 +1,3 @@
+[submodule "Project_folder_masterbranch-open62541/OPC_UA"]
+	path = Project_folder_masterbranch-open62541/OPC_UA
+	url = /home/ellenfel/Desktop/workenv/opcUA/OPC_UA
