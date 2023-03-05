@@ -44,7 +44,9 @@ int main(int argc, char * argv[]) {
 	UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
     }
 
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Server was shut down.");
 
     UA_Server_delete(server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
