@@ -4,7 +4,7 @@
 
 
 from opcua import Client
-client=Client("opc.tcp://192.168.70.71:12345/")
+client=Client("opc.tcp://127.0.1.1:12345/")
 client.connect()
 
 print(client.get_namespace_array())
