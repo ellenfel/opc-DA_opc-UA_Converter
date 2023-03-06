@@ -62,7 +62,7 @@ int main(int argc, char * argv[]) {
 
     //Add the variable vendor Name to server
     UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
-    UA_String vendorName = UA_STRINNG("Temp Sensors Ltd.");
+    UA_String vendorName = UA_STRING("Temp Sensors Ltd.");
     UA_Variant_setScalar(&vnAttr.value, &vendorName, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_VendorName"), r1_tempsens_Id,
 		    UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
@@ -73,7 +73,7 @@ int main(int argc, char * argv[]) {
     UA_VariableAttributes snAttr = UA_VariableAttributes_default;
     UA_Int32 serialNumber = 12345678;
     UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_SerialNumber"), r1_rempsens_Id,
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_SerialNumber"), r1_tempsens_Id,
                     UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                     UA_QUALIFIEDNAME(2, "SerialNumber"),
                     UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), snAttr, NULL, NULL);
@@ -81,10 +81,10 @@ int main(int argc, char * argv[]) {
     //Add the variable Temperature to server 
     UA_VariableAttributes tpAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&tpAttr.value, &Temperature, &UA_TYPES[UA_TYPES_INT32]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_Temperature"), r1_rempsens_Id,
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_Temperature"), r1_tempsens_Id,
                     UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                     UA_QUALIFIEDNAME(2, "Temperature"),
-                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), tpAttr, NULL, NULL)
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), tpAttr, NULL, NULL);
 
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "starting server...");
