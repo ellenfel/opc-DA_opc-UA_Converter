@@ -44,6 +44,47 @@ int main(int argc, char * argv[]) {
 	UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
     }
 
+    //Add a new namespace to the server
+    UA_Int16 ns_room1 = UA_Server_addNamespace(server,"Room1");
+    UA_LOG_INFO(UA_log_Stdout, UA_LOGCATEGORY_USERLAND, "New namespace added with Nr. %d", ns_room1);
+
+    //Add a new object called Temperature Sensor
+    UA_NodeId r1_tempsens_Id; /* get the nodeid assigned by the server */
+    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
+    UA_Server_addObjectNode(server,UA_NODEID_STRING(2,"R1_TemperatureSensor"),
+		    UA_NODEID_NUMERIC(0,UA_NS0ID_OBJECTSFOLDER),
+		    UA_NODEID_NUMERIC(0,UA_NS0ID_ORGANIZES),
+		    UA_QUALIFIEDNAME(2, "Temperature Sensor"),
+		    UA_NODEID_NUMERIC(0,UA_NS0ID_BASEOBJECTTYPE),
+		    oAttr, NULL, &r1_tempsens_Id);
+
+    //Add the variable vendor Name to server
+    UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
+    UA_String vendorName = UA_STRINNG("Temp Sensors Ltd.");
+    UA_Variant_setScalar(&vnAttr.value, &vendorName, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_VendorName"), r1_rempsens_Id,
+		    UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+		    UA_QUALIFIEDNAME(2, "Vendor Name"), 
+		    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), vnAttr, NULL, NULL);
+
+    //Add the variable Serial Number to server
+    UA_VariableAttributes snAttr = UA_VariableAttributes_default;
+    UA_Int32 serialNumber = 12345678;
+    UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_SerialNumber"), r1_rempsens_Id,
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                    UA_QUALIFIEDNAME(2, "SerialNumber"),
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), snAttr, NULL, NULL);
+
+    //Add the variable Serial Number to server 
+    //16.35
+    UA_VariableAttributes snAttr = UA_VariableAttributes_default;
+    UA_Int32 serialNumber = 12345678;
+    UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_SerialNumber"), r1_rempsens_Id,
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                    UA_QUALIFIEDNAME(2, "SerialNumber"),
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), snAttr, NULL, NULL)////
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Server was shut down.");
