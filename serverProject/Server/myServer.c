@@ -48,7 +48,7 @@ int main(int argc, char * argv[]) {
 
     //Add a new namespace to the server
     UA_Int16 ns_room1 = UA_Server_addNamespace(server,"Room1");
-    UA_LOG_INFO(UA_log_Stdout, UA_LOGCATEGORY_USERLAND, "New namespace added with Nr. %d", ns_room1);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New namespace added with Nr. %d", ns_room1);
 
     //Add a new object called Temperature Sensor
     UA_NodeId r1_tempsens_Id; /* get the nodeid assigned by the server */
@@ -64,7 +64,7 @@ int main(int argc, char * argv[]) {
     UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
     UA_String vendorName = UA_STRINNG("Temp Sensors Ltd.");
     UA_Variant_setScalar(&vnAttr.value, &vendorName, &UA_TYPES[UA_TYPES_STRING]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_VendorName"), r1_rempsens_Id,
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_VendorName"), r1_tempsens_Id,
 		    UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
 		    UA_QUALIFIEDNAME(2, "Vendor Name"), 
 		    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), vnAttr, NULL, NULL);
