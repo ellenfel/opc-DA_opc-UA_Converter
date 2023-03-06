@@ -9,6 +9,8 @@ static void stopHandler(int sig) {
     running = false;
 }
 
+UA_Double Temperature = 20.0;
+
 int main(int argc, char * argv[]) {
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
@@ -76,15 +78,15 @@ int main(int argc, char * argv[]) {
                     UA_QUALIFIEDNAME(2, "SerialNumber"),
                     UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), snAttr, NULL, NULL);
 
-    //Add the variable Serial Number to server 
-    //16.35
-    UA_VariableAttributes snAttr = UA_VariableAttributes_default;
-    UA_Int32 serialNumber = 12345678;
-    UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_SerialNumber"), r1_rempsens_Id,
+    //Add the variable Temperature to server 
+    UA_VariableAttributes tpAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&tpAttr.value, &Temperature, &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "R1_TS1_Temperature"), r1_rempsens_Id,
                     UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                    UA_QUALIFIEDNAME(2, "SerialNumber"),
-                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), snAttr, NULL, NULL)////
+                    UA_QUALIFIEDNAME(2, "Temperature"),
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE), tpAttr, NULL, NULL)
+
+
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Server was shut down.");
