@@ -18,6 +18,6 @@ Server_Nodes.build_list(Node(client.get_objects_node(), None))
 Server_Nodes.show_hierarchie()
 
 
-#Server_Node.node_list[449].get_node_value()
-#NameError
+customNodeSerialNumber= Server_Nodes.node_list[451].get_node_value()
+print("\nSerial Number of Temperature Sensor :",customNodeSerialNumber)
 
