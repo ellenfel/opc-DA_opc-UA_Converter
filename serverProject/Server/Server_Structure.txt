@@ -3,3 +3,7 @@ namespace 2: Room1
 |+----Vendor Name
 |+----Serial Number
 |+----Tempature
++-- Light Bulb
+|+---- Vendor Name
+|+---- Serial Number
+|+---- State (ON/OFF)

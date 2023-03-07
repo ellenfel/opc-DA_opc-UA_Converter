@@ -11,6 +11,23 @@ static void stopHandler(int sig) {
 
 UA_Double Temperature = 20.0;
 
+//synchronize a variable value with an external representation
+static void
+beforeReadTemperature(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) {
+    float tmp = 1.0 * (rand()%100)/100 -0.5;
+    
+    Temperature += tmp;
+    UA_Variant value;	
+    /*Copy the Temperature in a var,ant variable*/
+    UA_Variant_setScalar(&value, &Temperature, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_NodeId currentNodeId = UA_NODEID_STRING(1, "current-time-value-callback");
+    UA_Server_writeValue(server, UA_NODEID_STRING(2,"R1_TS1_Temperature"), value);
+
+}
+
 int main(int argc, char * argv[]) {
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
@@ -85,6 +102,19 @@ int main(int argc, char * argv[]) {
 		 UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
 	         UA_QUALIFIEDNAME(2, "Temperature"),
                  UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE),tpAttr, NULL,NULL);
+
+    //Add Callback to Temperature Node
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadTemperature;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "R1_TS1_Temperature"), callback);
+
+
+	    /*
+	     *will add a new node here
+	     *
+	     */
+
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
