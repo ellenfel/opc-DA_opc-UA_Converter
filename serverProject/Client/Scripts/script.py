@@ -26,3 +26,11 @@ print("\nOutput From Temperature Sensor :",customNodeTemp)
 
 customNodeVendorName= Server_Nodes.node_list[456].get_node_value()
 print("\nVendor Name :",customNodeVendorName)
+
+sleep(3)
+Server_Nodes.node_list[2].node.set_value(True)
+
+sleep(3)
+Server_Nodes.node_list[2].node.set_value(False)
+
+
